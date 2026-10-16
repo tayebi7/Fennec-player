@@ -1,5 +1,3 @@
-// Fennec-player-main/app/src/main/java/com/fennecplayer/app/MainActivity.kt
-
 package com.fennecplayer.app
 
 import android.os.Bundle
