@@ -1,4 +1,4 @@
-// app/src/main/java/com/fennecplayer/app/parser/MassivePlaylistEngine.kt
+// Fennec-player-main/app/src/main/java/com/fennecplayer/app/parser/MassivePlaylistEngine.kt
 package com.fennecplayer.app.parser
 
 import com.fennecplayer.app.data.ContentType
