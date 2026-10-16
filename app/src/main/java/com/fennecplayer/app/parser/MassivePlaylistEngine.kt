@@ -1,9 +1,8 @@
-// Fennec-player-main/app/src/main/java/com/fennecplayer/app/parser/MassivePlaylistEngine.kt
-
 package com.fennecplayer.app.parser
 
 import com.fennecplayer.app.data.ContentType
 import com.fennecplayer.app.data.PlaylistItem
+import java.util.regex.Pattern
 
 object MassivePlaylistEngine {
     fun parseM3U(content: String): List<PlaylistItem> {
