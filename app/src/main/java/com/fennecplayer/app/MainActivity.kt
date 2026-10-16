@@ -1,4 +1,3 @@
-// app/src/main/java/com/fennecplayer/app/MainActivity.kt
 package com.fennecplayer.app
 
 import android.os.Bundle
@@ -87,7 +86,7 @@ fun MediaViewerScreen(categoryName: String, onBack: () -> Unit) {
 
     LaunchedEffect(showControls) {
         if (showControls) {
-            delay(3000)
+            delay(3000) // إخفاء الأزرار تلقائياً بعد 3 ثوانٍ
             showControls = false
         }
     }
@@ -103,13 +102,31 @@ fun MediaViewerScreen(categoryName: String, onBack: () -> Unit) {
         }
 
         if (showControls) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .background(Color.Black.copy(alpha = 0.6f))
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Button(onClick = { /* تغيير القناة */ }) {
+                    Text("تغيير القناة")
+                }
+                Text(text = categoryName, color = Color.White)
+                Button(onClick = { /* تسريع أو تقديم */ }) {
+                    Text("تسريع الفيلم")
+                }
+            }
+
             Button(
                 onClick = onBack,
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(16.dp)
             ) {
-                Text("رجوع للقائمة")
+                Text("رجوع")
             }
         }
     }
