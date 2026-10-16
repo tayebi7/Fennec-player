@@ -1,3 +1,4 @@
+// Fennec-player-main/app/src/main/java/com/fennecplayer/app/utils/QrAndDeviceAuth.kt
 package com.fennecplayer.app.utils
 
 import android.graphics.Bitmap
