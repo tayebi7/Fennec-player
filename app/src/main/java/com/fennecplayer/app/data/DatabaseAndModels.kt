@@ -1,4 +1,3 @@
-// app/src/main/java/com/fennecplayer/app/data/DatabaseAndModels.kt
 package com.fennecplayer.app.data
 
 data class PlaylistItem(
@@ -13,3 +12,9 @@ data class PlaylistItem(
 enum class ContentType {
     LIVE, MOVIE, SERIES
 }
+
+data class Category(
+    val id: String,
+    val name: String,
+    val type: ContentType
+)
