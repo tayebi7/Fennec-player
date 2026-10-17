@@ -19,7 +19,6 @@ class MassivePlaylistEngine(private val dao: ChannelDao) {
         .readTimeout(60, TimeUnit.SECONDS)
         .build()
 
-    // 1. جلب وتوزيع Xtream Codes مع أسماء الفئات الحقيقية وفصل كل قسم وحده
     suspend fun loadXtreamPlaylist(
         hostUrl: String,
         username: String,
@@ -32,8 +31,7 @@ class MassivePlaylistEngine(private val dao: ChannelDao) {
         dao.clearAll()
         var totalCount = 0
 
-        // جلب أسماء فئات القنوات المباشرة ثم القنوات المباشرة فقط (LIVE)
-        val liveCats = fetchXtreamCategoryMap("$cleanHost/player_api.php?username=$u&password=$p&action=get_live_categories")
+        val liveCats = fetchCategoryMap("$cleanHost/player_api.php?username=$u&password=$p&action=get_live_categories")
         totalCount += fetchXtreamSection(
             url = "$cleanHost/player_api.php?username=$u&password=$p&action=get_live_streams",
             type = StreamType.LIVE,
@@ -43,8 +41,7 @@ class MassivePlaylistEngine(private val dao: ChannelDao) {
             currentTotal = totalCount
         )
 
-        // جلب أسماء فئات الأفلام ثم الأفلام فقط (MOVIE)
-        val vodCats = fetchXtreamCategoryMap("$cleanHost/player_api.php?username=$u&password=$p&action=get_vod_categories")
+        val vodCats = fetchCategoryMap("$cleanHost/player_api.php?username=$u&password=$p&action=get_vod_categories")
         totalCount += fetchXtreamSection(
             url = "$cleanHost/player_api.php?username=$u&password=$p&action=get_vod_streams",
             type = StreamType.MOVIE,
@@ -54,8 +51,7 @@ class MassivePlaylistEngine(private val dao: ChannelDao) {
             currentTotal = totalCount
         )
 
-        // جلب أسماء فئات المسلسلات ثم المسلسلات فقط (SERIES)
-        val seriesCats = fetchXtreamCategoryMap("$cleanHost/player_api.php?username=$u&password=$p&action=get_series_categories")
+        val seriesCats = fetchCategoryMap("$cleanHost/player_api.php?username=$u&password=$p&action=get_series_categories")
         fetchXtreamSection(
             url = "$cleanHost/player_api.php?username=$u&password=$p&action=get_series",
             type = StreamType.SERIES,
@@ -66,7 +62,7 @@ class MassivePlaylistEngine(private val dao: ChannelDao) {
         )
     }
 
-    private fun fetchXtreamCategoryMap(url: String): Map<String, String> {
+    private fun fetchCategoryMap(url: String): Map<String, String> {
         val map = mutableMapOf<String, String>()
         try {
             val request = Request.Builder().url(url).build()
@@ -140,7 +136,6 @@ class MassivePlaylistEngine(private val dao: ChannelDao) {
         return added
     }
 
-    // 2. تحميل وفصل ملف M3U بدقة عالية
     suspend fun downloadAndParseM3U(m3uUrl: String, onProgress: (Int) -> Unit) = withContext(Dispatchers.IO) {
         val request = Request.Builder().url(m3uUrl.trim()).build()
         client.newCall(request).execute().use { response ->
@@ -208,7 +203,7 @@ class MassivePlaylistEngine(private val dao: ChannelDao) {
         val g = group.lowercase()
         val u = url.lowercase()
         return when {
-            u.contains("/series/") || g.contains("series") || g.contains("مسلسلات") || g.contains("شاهد") -> StreamType.SERIES
+            u.contains("/series/") || g.contains("series") || g.contains("مسلسلات") -> StreamType.SERIES
             u.contains("/movie/") || u.endsWith(".mp4") || u.endsWith(".mkv") || g.contains("movie") || g.contains("vod") || g.contains("أفلام") || g.contains("افلام") -> StreamType.MOVIE
             else -> StreamType.LIVE
         }
