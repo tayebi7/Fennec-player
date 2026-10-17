@@ -12,8 +12,8 @@ android {
         applicationId = "com.fennecplayer.app"
         minSdk = 21
         targetSdk = 34
-        versionCode = 2
-        versionName = "3.7"
+        versionCode = 3
+        versionName = "3.7-IBO"
     }
 
     buildFeatures {
@@ -44,7 +44,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
 
-    // مشغل الفيديو ExoPlayer Media3
+    // مشغل الفيديو الحقيقي Media3 ExoPlayer
     val media3Version = "1.2.1"
     implementation("androidx.media3:media3-exoplayer:$media3Version")
     implementation("androidx.media3:media3-exoplayer-hls:$media3Version")
@@ -56,7 +56,7 @@ dependencies {
     implementation("androidx.room:room-ktx:$roomVersion")
     ksp("androidx.room:room-compiler:$roomVersion")
 
-    // الاتصالات والصور وتوليد QR Code
+    // الشبكة والصور وتوليد QR Code
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("io.coil-kt:coil-compose:2.5.0")
     implementation("com.google.zxing:core:3.5.3")
