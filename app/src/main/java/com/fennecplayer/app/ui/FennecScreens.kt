@@ -42,7 +42,7 @@ val IboCrimson = Color(0xFF6B0918)
 val IboHighlightBlue = Color(0xFF3880FF)
 val IboYellow = Color(0xFFFFD700)
 
-// 1. الواجهة الرئيسية مطابقة لتصميم IBO Player مع اسم Fennec Player
+// 1. القائمة الرئيسية بتصميم IBO Player مع اسم Fennec Player
 @Composable
 fun IboLauncherScreen(
     onNavigateLive: () -> Unit,
@@ -66,7 +66,6 @@ fun IboLauncherScreen(
             modifier = Modifier.align(Alignment.TopEnd)
         )
 
-        // شعار Fennec Player بتصميم المثلث الأحمر مثل IBO Player
         Row(
             modifier = Modifier
                 .align(Alignment.TopCenter)
@@ -78,7 +77,6 @@ fun IboLauncherScreen(
             Text(" player", color = Color.LightGray, fontSize = 22.sp)
         }
 
-        // شبكة الأزرار المطابقة للصورة
         Row(
             modifier = Modifier
                 .align(Alignment.Center)
@@ -86,7 +84,6 @@ fun IboLauncherScreen(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // مربع Live الكبير المحدد بإطار أبيض
             Box(
                 modifier = Modifier
                     .size(230.dp, 210.dp)
@@ -103,19 +100,16 @@ fun IboLauncherScreen(
                 }
             }
 
-            // العمود الثاني: Movies & Account
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 IboSquareTile("Movies", Icons.Default.PlayCircleOutline, IboCrimson, onNavigateMovies)
                 IboSquareTile("Account", Icons.Default.SupervisorAccount, IboCrimson, onNavigateAccount)
             }
 
-            // العمود الثالث: Series & Change Playlist
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 IboSquareTile("Series", Icons.Default.MovieFilter, IboCrimson, onNavigateSeries)
                 IboSquareTile("Change Playlist", Icons.Default.SyncAlt, IboCrimson, onNavigatePlaylists)
             }
 
-            // العمود الرابع: Settings, Reload, EXIT
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 IboWideActionBtn("Settings", Icons.Default.Settings, onNavigateAccount)
                 IboWideActionBtn("Reload", Icons.Default.Refresh, onReload)
@@ -169,7 +163,7 @@ fun IboWideActionBtn(title: String, icon: ImageVector, onClick: () -> Unit) {
     }
 }
 
-// 2. شاشة التلفزة المباشرة مع شاشة المعاينة المصغرة (Mini Video Player)
+// 2. شاشة التلفزة المباشرة مع شاشة المعاينة المصغرة
 @Composable
 fun IboLiveTvScreen(
     categories: List<String>,
@@ -192,7 +186,6 @@ fun IboLiveTvScreen(
             .fillMaxSize()
             .background(IboBgDark)
     ) {
-        // الشريط العلوي مطابق للصورة (الرئيسية | مباشر | أفلام | مسلسلات + شريط البحث)
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -221,9 +214,7 @@ fun IboLiveTvScreen(
             )
         }
 
-        // 3 أعمدة: الفئات + القنوات + شاشة معاينة القناة
         Row(modifier = Modifier.fillMaxSize()) {
-            // 1. عمود الفئات
             LazyColumn(
                 modifier = Modifier
                     .weight(0.24f)
@@ -256,7 +247,6 @@ fun IboLiveTvScreen(
                 }
             }
 
-            // 2. عمود القنوات
             val filteredList = if (searchQuery.isEmpty()) channels else channels.filter { it.title.contains(searchQuery, true) }
             LazyColumn(
                 modifier = Modifier
@@ -301,7 +291,6 @@ fun IboLiveTvScreen(
                 }
             }
 
-            // 3. العمود الأيمن: شاشة معاينة القناة المصغرة + أزرار ملء الشاشة والمفضلة
             Column(
                 modifier = Modifier
                     .weight(0.40f)
@@ -388,7 +377,6 @@ fun FullScreenPlayerWithAutoHideControls(
 ) {
     var controlsVisible by remember { mutableStateOf(true) }
 
-    // إخفاء الأزرار تلقائياً بعد 4 ثوانٍ
     LaunchedEffect(controlsVisible, channel) {
         if (controlsVisible) {
             delay(4000)
@@ -424,7 +412,6 @@ fun FullScreenPlayerWithAutoHideControls(
                     .fillMaxSize()
                     .background(Color.Black.copy(alpha = 0.45f))
             ) {
-                // الشريط العلوي
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -444,7 +431,6 @@ fun FullScreenPlayerWithAutoHideControls(
                     Text(channel.title, color = IboYellow, fontSize = 20.sp, fontWeight = FontWeight.Bold)
                 }
 
-                // الشريط السفلي (تغيير القناة + ترجيع وتقديم الفيلم)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -521,7 +507,7 @@ fun FullScreenPlayerWithAutoHideControls(
     }
 }
 
-// 4. شاشة شبكة الأفلام والمسلسلات مع معاينة البوستر قبل التشغيل
+// 4. شاشة شبكة الأفلام والمسلسلات مع معاينة البوستر
 @Composable
 fun IboVodGridScreen(
     title: String,
@@ -540,7 +526,6 @@ fun IboVodGridScreen(
             .fillMaxSize()
             .background(IboBgDark)
     ) {
-        // قائمة فئات الأفلام أو المسلسلات على اليسار
         Column(
             modifier = Modifier
                 .weight(0.24f)
@@ -579,7 +564,6 @@ fun IboVodGridScreen(
             }
         }
 
-        // شبكة بوسترات الأفلام/المسلسلات
         Column(
             modifier = Modifier
                 .weight(0.76f)
@@ -604,7 +588,6 @@ fun IboVodGridScreen(
 
             Spacer(Modifier.height(12.dp))
 
-            // نافذة معاينة المحتوى المختار قبل تشغيله
             previewVod?.let { selected ->
                 Row(
                     modifier = Modifier
@@ -709,7 +692,7 @@ fun IboPlaylistAndQrScreen(
         QrAndDeviceAuth.generateQrBitmap("https://iboproapp.com/?mac=$macAddress&key=$deviceKey")
     }
 
-    var tabIndex by remember { mutableStateOf(0) } // 0 = Xtream, 1 = M3U
+    var tabIndex by remember { mutableStateOf(0) }
     var serverUrl by remember { mutableStateOf("") }
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -723,7 +706,6 @@ fun IboPlaylistAndQrScreen(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // القسم الأيسر: خانة إدخال Xtream و M3U
         Column(
             modifier = Modifier
                 .weight(0.55f)
@@ -817,7 +799,6 @@ fun IboPlaylistAndQrScreen(
             }
         }
 
-        // القسم الأيمن: Mac Address + Device Key + QR Code مطابق لصورة IBO Player
         Column(
             modifier = Modifier.weight(0.42f),
             horizontalAlignment = Alignment.CenterHorizontally
