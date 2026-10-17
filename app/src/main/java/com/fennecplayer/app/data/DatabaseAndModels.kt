@@ -34,9 +34,6 @@ interface ChannelDao {
     @Query("SELECT * FROM channels WHERE streamType = :type AND isFavorite = 1")
     fun getFavoritesByType(type: StreamType): Flow<List<ChannelEntity>>
 
-    @Query("SELECT * FROM channels WHERE streamType = :type AND title LIKE '%' || :query || '%' LIMIT 200")
-    fun searchByType(type: StreamType, query: String): Flow<List<ChannelEntity>>
-
     @Query("UPDATE channels SET isFavorite = :isFav WHERE id = :channelId")
     suspend fun setFavorite(channelId: Long, isFav: Boolean)
 
